@@ -5,6 +5,7 @@ import ArtistList from "../../components/ArtistList";
 import Portada from "../../components/Portada";
 import FootBlock from "../../components/FootBlock";
 import { SingerDataContext } from "../../contexts/SingerDataContext";
+import useLogout from "../../hooks/useLogout";
 
 const Main = () => {
    const [token, setToken] = useState("")
@@ -26,8 +27,6 @@ const Main = () => {
       setToken(token)
   }, []) 
  
-  //Se encarga de la búsqueda del artista y artistas relacionados
-
 const searchArtists = async (e) => {
    e.preventDefault()
    SingerData('');
@@ -46,16 +45,6 @@ const searchArtists = async (e) => {
    }
 }
 
-
-
-//Cierra la sesión
-
-const logout = () =>{
-   setToken('')
-   window.localStorage.removeItem('token')
-}
-
-
    return(
       <>
       <Portada/>
@@ -69,7 +58,7 @@ const logout = () =>{
             {!token?
                <a href={`${process.env.REACT_APP_AUTH_ENDPOINT}?client_id=${process.env.REACT_APP_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}&response_type=${process.env.REACT_APP_RESPONSE_TYPE}`}><Button variant='outline-primary' size='lg'>Acceder</Button></a>
             :
-            <Button onClick={logout} variant='outline-primary' size='sm'>Cerrar Sesión</Button>  
+            <Button onClick={useLogout} variant='outline-primary' size='sm'>Cerrar Sesión</Button>  
 
             }  
            </Col>
