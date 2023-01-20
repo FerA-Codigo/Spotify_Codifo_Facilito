@@ -1,24 +1,26 @@
-import logo from './logo.svg';
 import './App.css';
+import {BrowserRouter as Browser, Routes, Route} from 'react-router-dom';
+import Main from './pages/Main';
+import Album from './pages/Album';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import { ArtistProvider } from './contexts/ArtistContext';
+import { SingerDataProvider } from './contexts/SingerDataContext';
+import { MusicDataProvider } from './contexts/MusicDataContext';
+
+AOS.init({once: true});
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ArtistProvider>
+     <Browser>
+      <Routes>
+        <Route path='/' element={<SingerDataProvider><Main/></SingerDataProvider>}/>
+        <Route path='/albums/:id' element={<MusicDataProvider><Album/></MusicDataProvider>}/>
+        <Route path='/*' element={<SingerDataProvider><Main/></SingerDataProvider>}/>
+      </Routes>
+    </Browser>
+    </ArtistProvider>
   );
 }
 
